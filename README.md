@@ -1,203 +1,174 @@
 # Amazon Tech Scraper — Architecture MVC & SQL Server (SSMS)
 
-Application de scraping et d'analyse d'outils et matériels technologiques sur Amazon (**sans interface web**, 100% autonome en ligne de commande), avec persistance relationnelle directe dans **Microsoft SQL Server (SQL Server Management Studio - SSMS)** et respect strict du patron de conception **Modèle-Vue-Contrôleur (MVC)**.
+### Informations du Projet
+- **Étudiant :** ESSANE Jean-Noël
+- **Niveau :** Licence 2 (L2) — Génie Logiciel
+- **Matière / Module :** Programmation & Gestion des Bases de Données
+- **Architecture :** Modèle - Vue - Contrôleur (MVC)
+- **SGBD :** Microsoft SQL Server (SQL Server Management Studio - SSMS)
 
 ---
 
-## Aperçu Direct des Données pour le Professeur (Sur GitHub)
+## Présentation du Projet
 
-Le professeur peut visualiser l'intégralité du projet et des données directement dans son navigateur :
+Ce projet implémente un système complet d'extraction et de gestion de données (Web Scraping) ciblant les outils et matériels technologiques sur Amazon (ordinateurs portables, composants, accessoires connectés).
 
-1. **Le script SQL complet de la base** : [`database_dump.sql`](database_dump.sql) *(création de la base, des tables et insertion des 15 articles technologiques)*.
-2. **Tableau des 15 articles technologiques extraits et enregistrés dans SQL Server** :
+L'application est conçue selon les principes du génie logiciel :
+- **Architecture MVC (Modèle-Vue-Contrôleur)** stricte et modulaire.
+- **Persistance des données** dans un SGBD relationnel professionnel : **Microsoft SQL Server (SSMS)** avec SQLAlchemy et ODBC.
+- **Application console autonome** : extraction, structuration et insertion automatique en base de données sans dépendance à une interface web superflue.
+
+---
+
+## Aperçu des Données Extraites en Base de Données
+
+Toutes les données ci-dessous proviennent directement de la base **`AmazonTechDB`** :
+
+1. **Script SQL complet de la base :** [`database_dump.sql`](database_dump.sql) *(contient le schéma DDL et les instructions INSERT des 15 articles technologiques)*.
+2. **Tableau des articles technologiques enregistrés dans SQL Server :**
 
 | # | ASIN | Prix | Note | Avis | Modèle & Caractéristiques Techniques |
 | :-: | :---: | :---: | :---: | :---: | :--- |
-| **1** | `B0DY2T14P6` | 289.00 € | ★ 4.2 / 5 | 175 | **HP 15-fd0001sf Ordinateur Portable 15,6" FHD** |
-| **2** | `B0HG52H23H` | 219.99 € | ★ 4.6 / 5 | 5 | **Ordinateur Portable Win 11 Laptop, 15,6" PC Portable** |
-| **3** | `B0GQJ8TY68` | 249.99 € | ★ 4.0 / 5 | 97 | **ASUS CM1505CM4A-S70121 15.6 Pouces FHD (1920 x 1080)** |
-| **4** | `B0HKHVKM2S` | 299.99 € | ★ 5.0 / 5 | 12 | **Ordinateur Portable 15,6 Pouces IPS FHD, Core i3** |
-| **5** | `B0B8QYXY9H` | 419.00 € | ★ 4.2 / 5 | 59 | **Acer Aspire Go 17 \| PC Portable \| 17.3" \| Intel** |
-| **6** | `B0CPJNNLR4` | 549.00 € | ★ 4.3 / 5 | 126 | **Lenovo FullHD 15,6 Ordinateur Portable Gaming** |
-| **7** | `B0H11DFC26` | 249.99 € | ★ 4.4 / 5 | 63 | **Ordinateur Portable 14 Pouces N4020 SSD** |
-| **8** | `B0HFZ78WPC` | 369.99 € | ★ 5.0 / 5 | 1 | **Ordinateur Portable 16" Core i3-1000NG4** |
-| **9** | `B0FXRFG5B8` | 279.99 € | ★ 4.1 / 5 | 51 | **Ordinateur Portable 14 Pouces Celeron N5095** |
-| **10** | `B0GX64X14Q` | 299.99 € | ★ 5.0 / 5 | 1 | **Lenovo Chrome \| Laptop \| Kompanio 540 \| 8Go** |
-| **11** | `B0H6M57QGJ` | - | ★ 4.0 / 5 | 15 | **PINSTONE PC Portable de 14 Pouces Celeron N4000** |
-| **12** | `B0BBKYTKXR` | 359.00 € | ★ 4.3 / 5 | 24 | **Acer Chromebook Plus 514 \| 14" WUXGA \| Core 3** |
-| **13** | `B0H3F32J2S` | 218.49 € | ★ 3.0 / 5 | 23 | **Ordinateur Portable 15,6 Pouces 8 Go RAM, SSD 256** |
-| **14** | `B0HFWTZ59X` | 499.99 € | ★ 4.0 / 5 | 1 | **Lenovo IdeaPad Slim 3 \| Laptop \| R3 \| 8Go \| 512GB** |
-| **15** | `B0FXRDG7P5` | 279.99 € | ★ 4.1 / 5 | 51 | **Ordinateur Portable 14 Pouces Celeron N5095** |
+| **1** | `B0DY2T14P6` | 289.00 € | 4.2 / 5 | 175 | **HP 15-fd0001sf Ordinateur Portable 15,6" FHD** |
+| **2** | `B0HG52H23H` | 219.99 € | 4.6 / 5 | 5 | **Ordinateur Portable Win 11 Laptop, 15,6" PC Portable** |
+| **3** | `B0GQJ8TY68` | 249.99 € | 4.0 / 5 | 97 | **ASUS CM1505CM4A-S70121 15.6 Pouces FHD (1920 x 1080)** |
+| **4** | `B0HKHVKM2S` | 299.99 € | 5.0 / 5 | 12 | **Ordinateur Portable 15,6 Pouces IPS FHD, Core i3** |
+| **5** | `B0B8QYXY9H` | 419.00 € | 4.2 / 5 | 59 | **Acer Aspire Go 17 \| PC Portable \| 17.3" \| Intel** |
+| **6** | `B0CPJNNLR4` | 549.00 € | 4.3 / 5 | 126 | **Lenovo FullHD 15,6 Ordinateur Portable Gaming** |
+| **7** | `B0H11DFC26` | 249.99 € | 4.4 / 5 | 63 | **Ordinateur Portable 14 Pouces N4020 SSD** |
+| **8** | `B0HFZ78WPC` | 369.99 € | 5.0 / 5 | 1 | **Ordinateur Portable 16" Core i3-1000NG4** |
+| **9** | `B0FXRFG5B8` | 279.99 € | 4.1 / 5 | 51 | **Ordinateur Portable 14 Pouces Celeron N5095** |
+| **10** | `B0GX64X14Q` | 299.99 € | 5.0 / 5 | 1 | **Lenovo Chrome \| Laptop \| Kompanio 540 \| 8Go** |
+| **11** | `B0H6M57QGJ` | - | 4.0 / 5 | 15 | **PINSTONE PC Portable de 14 Pouces Celeron N4000** |
+| **12** | `B0BBKYTKXR` | 359.00 € | 4.3 / 5 | 24 | **Acer Chromebook Plus 514 \| 14" WUXGA \| Core 3** |
+| **13** | `B0H3F32J2S` | 218.49 € | 3.0 / 5 | 23 | **Ordinateur Portable 15,6 Pouces 8 Go RAM, SSD 256** |
+| **14** | `B0HFWTZ59X` | 499.99 € | 4.0 / 5 | 1 | **Lenovo IdeaPad Slim 3 \| Laptop \| R3 \| 8Go \| 512GB** |
+| **15** | `B0FXRDG7P5` | 279.99 € | 4.1 / 5 | 51 | **Ordinateur Portable 14 Pouces Celeron N5095** |
 
 ---
 
-## Comment Voir les Données dans SQL Server Management Studio (SSMS)
+## Visualisation dans SQL Server Management Studio (SSMS)
 
-Toutes les données extraites sont directement enregistrées dans votre instance locale **Microsoft SQL Server** dans la base de données **`AmazonTechDB`**.
+Les données sont enregistrées dans la base **`AmazonTechDB`** de votre serveur local SQL Server.
 
-### 1. Ouvrir SSMS
+### 1. Connexion à SSMS
 1. Lancez **SQL Server Management Studio**.
-2. Dans la fenêtre de connexion :
-   - **Type de serveur** : Moteur de base de données (Database Engine)
-   - **Nom du serveur** : `localhost` (ou `.`)
-   - **Authentification** : Authentification Windows
-3. Cliquez sur **Se connecter** (Connect).
+2. Connectez-vous avec :
+   - **Nom du serveur :** `localhost` (ou `.`)
+   - **Authentification :** Authentification Windows
+3. Cliquez sur **Se connecter**.
 
-### 2. Accéder aux Tables
-Dans l'**Explorateur d'objets** (volet de gauche) :
-1. Développez **Bases de données** (Databases) → vous verrez **`AmazonTechDB`**.
-2. Développez **Tables** → vous trouverez :
-   - **`dbo.products`** : Contient tous les articles tech scrapés (titre, ASIN, prix, note, avis, etc.).
-   - **`dbo.scraping_sessions`** : Contient chaque mission de scraping (date, recherche, statut).
+### 2. Emplacement des Données
+Dans l'Explorateur d'objets :
+- **`AmazonTechDB` > Tables > `dbo.products`** : Données des produits technologiques (titre, prix, note, avis, ASIN, URL).
+- **`AmazonTechDB` > Tables > `dbo.scraping_sessions`** : Historique des sessions de scraping.
 
-### 3. Exécuter des Requêtes SQL dans SSMS
-Cliquez sur **Nouvelle requête** (New Query) en haut à gauche et exécutez (`F5`) :
+### 3. Requêtes SQL
+Ouvrez une **Nouvelle Requête** et exécutez (`F5`) :
 
 ```sql
 USE AmazonTechDB;
 GO
 
--- 1. Voir tous les articles technologiques enregistrés
-SELECT id, asin, title, price_raw, rating_score, reviews_count, product_url 
+-- 1. Lister tous les produits technologiques
+SELECT id, asin, title, price_raw, rating_score, reviews_count 
 FROM products;
 
--- 2. Voir les produits les mieux notés
+-- 2. Trier les produits par note décroissante
 SELECT title, price_raw, rating_score 
 FROM products 
 ORDER BY rating_score DESC;
 
--- 3. Voir l'historique des sessions de scraping
+-- 3. Consulter les sessions de scraping exécutées
 SELECT id, query_text, started_at, status, products_count 
 FROM scraping_sessions;
 ```
 
 ---
 
-## Comment Activer et Lancer le Scrapeur
+## Instructions d'Exécution du Scrapeur
 
-Suivez ces 3 étapes simples pour activer et utiliser le scrapeur :
-
-### Étape 1 : Ouvrir PowerShell dans le dossier du projet
+### Étape 1 : Activer l'environnement Python
+Dans le terminal PowerShell :
 ```powershell
 cd "c:\Users\PC\Desktop\repertoi iit\SCRAPEUR AMAZONE"
-```
-
-### Étape 2 : Activer l'environnement virtuel Python
-```powershell
 .\.venv\Scripts\Activate.ps1
 ```
-*(Si une politique d'exécution bloque le script, lancez directement : `.\.venv\Scripts\python.exe main.py`)*
 
-### Étape 3 : Vérifier les dépendances
+### Étape 2 : Installer les dépendances (si nécessaire)
 ```powershell
 pip install -r requirements.txt
 ```
 
----
+### Étape 3 : Lancer le programme
 
-## Méthodes de Lancement du Scrapeur
+- **Mode Interactif (Menu guidé avec choix des catégories tech) :**
+  ```powershell
+  python main.py
+  ```
 
-### Méthode 1 : Mode Interactif (Recommandé)
-Lance un menu guidé dans votre terminal :
-```powershell
-python main.py
-```
-Ce menu vous permet de :
-- Choisir directement une catégorie technologique prédéfinie (*Laptops, Cartes Graphiques, Smartphones, Casques, SSD, Écrans*).
-- Taper une recherche libre personnalisée.
-- Définir le nombre d'articles à récupérer.
-- Choisir le domaine Amazon (`amazon.com`, `amazon.fr`, etc.).
+- **Mode Commande Directe :**
+  ```powershell
+  # Scraper 15 ordinateurs portables
+  python main.py --query "laptop dell" --max 15
 
-### Méthode 2 : Lancement Direct en Ligne de Commande
-Pour scraper directement un produit tech sans passer par le menu :
-```powershell
-# Exemple 1 : Récupérer 15 ordinateurs portables
-python main.py --query "laptop dell" --max 15
+  # Scraper des cartes graphiques
+  python main.py --query "carte graphique RTX 4070" --domain "amazon.fr" --max 10
+  ```
 
-# Exemple 2 : Récupérer 10 cartes graphiques sur Amazon France
-python main.py --query "carte graphique RTX 4070" --domain "amazon.fr" --max 10
-
-# Exemple 3 : Récupérer 20 disques SSD NVMe
-python main.py --query "ssd nvme 2to" --max 20
-```
-
-### Méthode 3 : Mode Arrière-Plan (Headless)
-Pour exécuter le scrapeur en toute discrétion sans afficher la fenêtre Chrome :
-```powershell
-python main.py --query "smartphone 5g" --max 15 --headless
-```
-
-### Méthode 4 : Consulter les Données Déjà Stockées en BDD via la console
-```powershell
-python main.py --show-db
-```
+- **Consulter le contenu de la base sans relancer de scraping :**
+  ```powershell
+  python main.py --show-db
+  ```
 
 ---
 
-## Options Disponibles en Ligne de Commande
-
-| Argument | Description | Exemple |
-| :--- | :--- | :--- |
-| `--query`, `-q` | Mot-clé technologique à rechercher | `--query "macbook pro m3"` |
-| `--max`, `-m` | Nombre maximum de produits à scraper | `--max 20` (défaut : 15) |
-| `--domain`, `-d` | Domaine Amazon cible | `--domain "amazon.fr"` (défaut : `amazon.com`) |
-| `--category`, `-c` | Nom de la catégorie tech pour la BDD | `--category "PC Portables"` |
-| `--headless` | Lance le navigateur Chrome en tâche de fond | `--headless` |
-| `--show-db` | Affiche l'historique et les tables en base | `--show-db` |
-
----
-
-## Architecture MVC
+## Architecture MVC du Projet
 
 ```
 SCRAPEUR AMAZONE/
 │
-├── main.py                   # Point d'entrée principal (CLI interactif ou par arguments)
-├── config.py                 # Configuration centralisée (connexion SQL Server SSMS, catégories tech)
-├── requirements.txt          # Dépendances (SQLAlchemy, pyodbc, Selenium, BeautifulSoup4)
+├── main.py                   # Point d'entrée principal (CLI interactif & paramètres)
+├── config.py                 # Configuration centralisée (SGBD SQL Server, catégories)
+├── database_dump.sql         # Export SQL complet pour évaluation directe
+├── requirements.txt          # Dépendances du projet (SQLAlchemy, pyodbc, Selenium, etc.)
 │
 ├── models/                   # ── [ MODÈLE (M) ] ──
-│   ├── __init__.py
-│   ├── database.py           # Moteur SQL Server SQLAlchemy & gestionnaire de transactions
-│   └── product.py            # Modèles ORM (Product, ScrapingSession) & DAO (ProductRepository)
+│   ├── database.py           # Gestion de la connexion SQL Server & sessions SQLAlchemy
+│   └── product.py            # Classes Product & ScrapingSession + DAO ProductRepository
 │
 ├── views/                    # ── [ VUE (V) ] ──
-│   ├── __init__.py
-│   └── cli_view.py           # Présentation Console (bannières, menus, tableaux, stats)
+│   └── cli_view.py           # Présentation console (tableaux formatés, progression, stats)
 │
 ├── controllers/              # ── [ CONTRÔLEUR (C) ] ──
-│   ├── __init__.py
-│   └── scraper_controller.py # Orchestrateur : pilote le scraping, ordonne l'insertion dans SQL Server
+│   └── scraper_controller.py # Logique métier : orchestre le scraping et persiste en BDD
 │
 └── scrapers/                 # ── [ MOTEUR D'EXTRACTION ] ──
-    ├── __init__.py
-    └── amazon_scraper.py     # Scraper Selenium (undetected-chromedriver) + BeautifulSoup4
+    └── amazon_scraper.py     # Module d'extraction Selenium & BeautifulSoup
 ```
 
 ---
 
-## Schéma des Tables SQL Server (`AmazonTechDB`)
+## Schéma Relationnel des Tables
 
 ### 1. Table `dbo.scraping_sessions`
-Enregistre chaque mission de recherche :
-- `id` : Clé primaire auto-incrémentée (IDENTITY)
-- `query_text` : Mot-clé recherché (ex: *laptop rtx 4070*, *ssd nvme 2to*)
+- `id` : Identifiant unique auto-incrémenté (PRIMARY KEY)
+- `query_text` : Mot-clé recherché
 - `domain` : Domaine Amazon (.com, .fr, etc.)
 - `category` : Catégorie technologique ciblée
-- `status` : Statut (`running`, `completed`, `error`)
-- `started_at` & `completed_at` : Horodatages UTC
+- `status` : Statut d'exécution (`completed`, `error`)
+- `started_at` : Date et heure de début
+- `completed_at` : Date et heure de fin
 - `products_count` : Nombre d'articles collectés
 
 ### 2. Table `dbo.products`
-Enregistre chaque outil ou produit technologique :
-- `id` : Clé primaire auto-incrémentée (IDENTITY)
-- `session_id` : Clé étrangère liée à la session
-- `asin` : Identifiant Amazon unique
-- `title` : Désignation complète du produit tech
-- `price_raw`, `price_val`, `currency` : Prix textuel, prix numérique et devise
+- `id` : Identifiant unique auto-incrémenté (PRIMARY KEY)
+- `session_id` : Référence vers la session de scraping (FOREIGN KEY)
+- `asin` : Identifiant standard Amazon (ASIN)
+- `title` : Titre complet et caractéristiques du produit
+- `price_raw`, `price_val`, `currency` : Prix brut, valeur numérique et devise
 - `rating_score`, `rating_raw` : Note sur 5
-- `reviews_count`, `reviews_raw` : Nombre d'évaluations clients
+- `reviews_count` : Nombre d'avis clients
 - `product_url`, `image_url` : Liens web et visuels
-- `is_prime`, `is_sponsored`, `badge` : Métadonnées commerciales
-- `category`, `domain` : Catégorie et boutique d'origine
-- `scraped_at` : Date d'enregistrement
+- `category`, `domain` : Catégorie et plateforme d'origine
+- `scraped_at` : Horodatage de l'enregistrement
