@@ -1,0 +1,23 @@
+# Environnement virtuel Python
+.venv/
+venv/
+ENV/
+env/
+
+# Fichiers compilés Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Données locales et caches temporaires
+*.db
+*.sqlite3
+chrome_profile/
+*.log
+
+# Fichiers système et éditeurs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
