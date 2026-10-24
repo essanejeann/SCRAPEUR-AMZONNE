@@ -4,6 +4,33 @@ Application de scraping et d'analyse d'outils et matériels technologiques sur A
 
 ---
 
+## Aperçu Direct des Données pour le Professeur (Sur GitHub)
+
+Le professeur peut visualiser l'intégralité du projet et des données directement dans son navigateur :
+
+1. **Le script SQL complet de la base** : [`database_dump.sql`](database_dump.sql) *(création de la base, des tables et insertion des 15 articles technologiques)*.
+2. **Tableau des 15 articles technologiques extraits et enregistrés dans SQL Server** :
+
+| # | ASIN | Prix | Note | Avis | Modèle & Caractéristiques Techniques |
+| :-: | :---: | :---: | :---: | :---: | :--- |
+| **1** | `B0DY2T14P6` | 289.00 € | ★ 4.2 / 5 | 175 | **HP 15-fd0001sf Ordinateur Portable 15,6" FHD** |
+| **2** | `B0HG52H23H` | 219.99 € | ★ 4.6 / 5 | 5 | **Ordinateur Portable Win 11 Laptop, 15,6" PC Portable** |
+| **3** | `B0GQJ8TY68` | 249.99 € | ★ 4.0 / 5 | 97 | **ASUS CM1505CM4A-S70121 15.6 Pouces FHD (1920 x 1080)** |
+| **4** | `B0HKHVKM2S` | 299.99 € | ★ 5.0 / 5 | 12 | **Ordinateur Portable 15,6 Pouces IPS FHD, Core i3** |
+| **5** | `B0B8QYXY9H` | 419.00 € | ★ 4.2 / 5 | 59 | **Acer Aspire Go 17 \| PC Portable \| 17.3" \| Intel** |
+| **6** | `B0CPJNNLR4` | 549.00 € | ★ 4.3 / 5 | 126 | **Lenovo FullHD 15,6 Ordinateur Portable Gaming** |
+| **7** | `B0H11DFC26` | 249.99 € | ★ 4.4 / 5 | 63 | **Ordinateur Portable 14 Pouces N4020 SSD** |
+| **8** | `B0HFZ78WPC` | 369.99 € | ★ 5.0 / 5 | 1 | **Ordinateur Portable 16" Core i3-1000NG4** |
+| **9** | `B0FXRFG5B8` | 279.99 € | ★ 4.1 / 5 | 51 | **Ordinateur Portable 14 Pouces Celeron N5095** |
+| **10** | `B0GX64X14Q` | 299.99 € | ★ 5.0 / 5 | 1 | **Lenovo Chrome \| Laptop \| Kompanio 540 \| 8Go** |
+| **11** | `B0H6M57QGJ` | - | ★ 4.0 / 5 | 15 | **PINSTONE PC Portable de 14 Pouces Celeron N4000** |
+| **12** | `B0BBKYTKXR` | 359.00 € | ★ 4.3 / 5 | 24 | **Acer Chromebook Plus 514 \| 14" WUXGA \| Core 3** |
+| **13** | `B0H3F32J2S` | 218.49 € | ★ 3.0 / 5 | 23 | **Ordinateur Portable 15,6 Pouces 8 Go RAM, SSD 256** |
+| **14** | `B0HFWTZ59X` | 499.99 € | ★ 4.0 / 5 | 1 | **Lenovo IdeaPad Slim 3 \| Laptop \| R3 \| 8Go \| 512GB** |
+| **15** | `B0FXRDG7P5` | 279.99 € | ★ 4.1 / 5 | 51 | **Ordinateur Portable 14 Pouces Celeron N5095** |
+
+---
+
 ## Comment Voir les Données dans SQL Server Management Studio (SSMS)
 
 Toutes les données extraites sont directement enregistrées dans votre instance locale **Microsoft SQL Server** dans la base de données **`AmazonTechDB`**.
